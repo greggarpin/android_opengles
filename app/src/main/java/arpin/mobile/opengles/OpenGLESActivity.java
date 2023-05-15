@@ -30,17 +30,6 @@ public class OpenGLESActivity extends AppCompatActivity {
     private class ProgramRenderer implements GLSurfaceView.Renderer {
         private VertexList coords = null;
 
-        private final String vertexShaderCode =
-                "attribute vec4 vPosition; \n" +
-                        "void main(){              \n" +
-                        " gl_Position = vPosition; \n" +
-                        "}                         \n";
-
-        private final String fragmentShaderCode =
-                "precision mediump float;  \n" +
-                        "void main(){              \n" +
-                        " gl_FragColor = vec4 (0.0, 1.0, 0.0, 1.0); \n" +
-                        "}                         \n";
         private ShaderProgram shaderProgram;
 
         public void onSurfaceCreated(GL10 unused, EGLConfig config) {
@@ -51,7 +40,7 @@ public class OpenGLESActivity extends AppCompatActivity {
                     .add(new Vertex(0.5f, -0.25f, 0f))
                     .add(new Vertex(0f, 0.5f, 0f));
 
-            shaderProgram = new ShaderProgram(vertexShaderCode, fragmentShaderCode);
+            shaderProgram = ShaderProgram.createFromAssetFiles(getAssets(), "defaultVertexShader.vert", "defaultFragmentShader.frag");
         }
 
         public void onDrawFrame(GL10 unused) {
