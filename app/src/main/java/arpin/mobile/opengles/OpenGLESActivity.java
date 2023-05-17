@@ -30,20 +30,18 @@ public class OpenGLESActivity extends AppCompatActivity {
     }
 
     private class ProgramRenderer implements GLSurfaceView.Renderer {
+        Renderer renderer;
         private Renderable triangle = new Triangle();
-
-        private ShaderProgram shaderProgram;
 
         public void onSurfaceCreated(GL10 unused, EGLConfig config) {
             GLES20.glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
 
-            shaderProgram = ShaderProgram.createFromAssetFiles(getAssets(), "defaultVertexShader.vert", "defaultFragmentShader.frag");
+            ShaderProgram shaderProgram = ShaderProgram.createFromAssetFiles(getAssets(), "defaultVertexShader.vert", "defaultFragmentShader.frag");
+            renderer = new OpenGLRenderer(shaderProgram);
         }
 
         public void onDrawFrame(GL10 unused) {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-
-            Renderer renderer = new OpenGLRenderer(shaderProgram);
 
             renderer.initializeRenderLoop();
             renderer.render(triangle);
