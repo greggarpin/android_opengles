@@ -30,6 +30,8 @@ public class OpenGLRenderer implements Renderer
     @Override
     public void initializeRenderLoop()
     {
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
         shaderProgram.use();
     }
 
