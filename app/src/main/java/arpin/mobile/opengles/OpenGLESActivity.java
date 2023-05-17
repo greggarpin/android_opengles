@@ -8,9 +8,11 @@ import android.os.Bundle;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import arpin.mobile.opengles.math.Vertex;
-import arpin.mobile.opengles.math.VertexList;
+import arpin.mobile.opengles.ogl.OpenGLRenderer;
 import arpin.mobile.opengles.ogl.ShaderProgram;
+import arpin.mobile.opengles.renderables.Renderable;
+import arpin.mobile.opengles.renderables.Renderer;
+import arpin.mobile.opengles.renderables.Triangle;
 
 public class OpenGLESActivity extends AppCompatActivity {
 
@@ -28,17 +30,12 @@ public class OpenGLESActivity extends AppCompatActivity {
     }
 
     private class ProgramRenderer implements GLSurfaceView.Renderer {
-        private VertexList coords = null;
+        private Renderable triangle = new Triangle();
 
         private ShaderProgram shaderProgram;
 
         public void onSurfaceCreated(GL10 unused, EGLConfig config) {
             GLES20.glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-
-            coords = (new VertexList())
-                    .add(new Vertex(-0.5f, -0.25f, 0f))
-                    .add(new Vertex(0.5f, -0.25f, 0f))
-                    .add(new Vertex(0f, 0.5f, 0f));
 
             shaderProgram = ShaderProgram.createFromAssetFiles(getAssets(), "defaultVertexShader.vert", "defaultFragmentShader.frag");
         }
@@ -46,13 +43,11 @@ public class OpenGLESActivity extends AppCompatActivity {
         public void onDrawFrame(GL10 unused) {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-            shaderProgram.use();
+            Renderer renderer = new OpenGLRenderer(shaderProgram);
 
-            int positionHandle = shaderProgram.getHandle("vPosition");
-            GLES20.glVertexAttribPointer(positionHandle, coords.size(), GLES20.GL_FLOAT, false, coords.serializedVertexSize(), coords.toFloatBuffer());
-            GLES20.glEnableVertexAttribArray(positionHandle);
-
-            GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 3);
+            renderer.initializeRenderLoop();
+            renderer.render(triangle);
+            renderer.cleanupRenderLoop();
         }
 
         public void onSurfaceChanged(GL10 unused, int width, int height) {
