@@ -2,7 +2,7 @@ package arpin.mobile.opengles.math;
 
 public class Color
 {
-    private float red = 0;
+    protected float red = 0;
     private float green = 0;
     private float blue = 0;
     private float alpha = 1;
