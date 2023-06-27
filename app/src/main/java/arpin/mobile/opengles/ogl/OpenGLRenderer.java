@@ -2,6 +2,7 @@ package arpin.mobile.opengles.ogl;
 
 import android.opengl.GLES20;
 
+import arpin.mobile.opengles.math.Color;
 import arpin.mobile.opengles.math.VertexList;
 import arpin.mobile.opengles.renderables.Renderable;
 import arpin.mobile.opengles.renderables.Renderer;
@@ -9,10 +10,13 @@ import arpin.mobile.opengles.renderables.Renderer;
 public class OpenGLRenderer implements Renderer
 {
     private ShaderProgram shaderProgram;
+    final private Color clearColor = new Color(0.5f, 0.5f, 0.5f, 1f);
 
     public OpenGLRenderer(ShaderProgram program)
     {
         shaderProgram = program;
+
+        GLES20.glClearColor(clearColor.getRed(), clearColor.getGreen(), clearColor.getBlue(), clearColor.getAlpha());
     }
 
     @Override

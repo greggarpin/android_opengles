@@ -34,8 +34,6 @@ public class OpenGLESActivity extends AppCompatActivity {
         private Renderable triangle = new Triangle();
 
         public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-            GLES20.glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-
             ShaderProgram shaderProgram = ShaderProgram.createFromAssetFiles(getAssets(), "defaultVertexShader.vert", "defaultFragmentShader.frag");
             renderer = new OpenGLRenderer(shaderProgram);
         }
