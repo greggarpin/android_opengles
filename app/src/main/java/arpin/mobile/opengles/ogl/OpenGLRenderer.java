@@ -43,4 +43,9 @@ public class OpenGLRenderer implements Renderer
     public void cleanupRenderLoop()
     {
     }
+
+    public void setViewDimensions(int width, int height)
+    {
+        GLES20.glViewport(0, 0, width, height);
+    }
 }

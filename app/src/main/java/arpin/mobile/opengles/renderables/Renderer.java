@@ -7,4 +7,6 @@ public interface Renderer
     public void initializeRenderLoop();
 
     public void cleanupRenderLoop();
+
+    public void setViewDimensions(int width, int height);
 }

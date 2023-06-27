@@ -1,6 +1,5 @@
 package arpin.mobile.opengles;
 
-import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,8 +44,9 @@ public class OpenGLESActivity extends AppCompatActivity {
             renderer.cleanupRenderLoop();
         }
 
-        public void onSurfaceChanged(GL10 unused, int width, int height) {
-            GLES20.glViewport(0, 0, width, height);
+        public void onSurfaceChanged(GL10 unused, int width, int height)
+        {
+            renderer.setViewDimensions(width, height);
         }
     }
 }
