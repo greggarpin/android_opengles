@@ -62,14 +62,7 @@ public class VertexList
     public FloatBuffer toFloatBuffer()
     {
         if (floatBuffer == null) {
-            float[] vertexArray = toArray();
-
-            ByteBuffer bb = ByteBuffer.allocateDirect(floatSize * vertexArray.length * size());
-            bb.order(ByteOrder.nativeOrder());
-
-            floatBuffer = bb.asFloatBuffer();
-            floatBuffer.put(vertexArray);
-            floatBuffer.position(0);
+            floatBuffer = Float.arrayToFloatBuffer(toArray());
         }
 
         return floatBuffer;

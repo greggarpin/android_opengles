@@ -91,6 +91,23 @@ public class ShaderProgram
         }
     }
 
+    /// TODO:: Does this really need to be a separate function from the fetching of an attribute handle (above)?
+    public int getUniformHandle(final String handleName)
+    {
+        try {
+            if (!cachedHandles.containsKey(handleName)) {
+
+                int handle = GLES20.glGetUniformLocation(programHandle, handleName);
+                cachedHandles.put(handleName, handle);
+            }
+            return cachedHandles.get(handleName);
+
+        } catch (NullPointerException ex) {
+            // Should never happen because of the above check
+            return 0;
+        }
+    }
+
     public void use()
     {
         GLES20.glUseProgram(programHandle);
